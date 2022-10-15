@@ -23,6 +23,8 @@ void Score::init(SDL_Renderer* renderer)
 {
 	TTF_Init();
 
+	// Создание текстуры из текста - значение очков
+
 	mFont = TTF_OpenFont("arial.ttf", 25);
 
 	std::string displayedValue = std::to_string(mValue);

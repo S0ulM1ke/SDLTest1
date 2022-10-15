@@ -27,6 +27,7 @@ public:
 
 	void setPosX(int x) { mPosition.x = x; mAabb.setCenterX(x + mAabb.getExtentX()); }
 	void setPosY(int y) { mPosition.y = y; mAabb.setCenterY(y + mAabb.getExtentY()); }
+	void setVelocity(float velovcity) { mVelocity = velovcity; }
 
 	const bool isScores(Scores score) const { return mScores == score; }
 	const bool isCollided() { return mWallCollided; }

@@ -23,13 +23,15 @@ Paddle::Paddle(int x, int y, Type type)
 
 void Paddle::update(const Wall& topWall, const Wall& bottomWall)
 {
+	// Скорость в зависимости от типа ракетки (ракетка игрока или компьютера)
+
 	switch (mType)
 	{
 	case Paddle::Type::PLAYER:
 		mVelocity = 3;
 		break;
 	case Paddle::Type::COMPUTER:
-		mVelocity = 1;
+		mVelocity = 2;
 		break;
 	}
 
@@ -41,6 +43,8 @@ void Paddle::update(const Wall& topWall, const Wall& bottomWall)
 		mAabb.setCenterY(mAabb.getCenterY() + movement);
 		if (mDirection == Direction::UP)
 		{
+			// Проверка столкновения с верхней стенкой
+
 			const auto& wallAabb = topWall.getAabb();
 			if (mAabb.collides(wallAabb))
 			{
@@ -54,6 +58,8 @@ void Paddle::update(const Wall& topWall, const Wall& bottomWall)
 		}
 		else
 		{
+			// Проверка столкновения с нижней стенкой
+
 			const auto& wallAabb = bottomWall.getAabb();
 			if (mAabb.collides(wallAabb))
 			{

@@ -20,6 +20,8 @@ void Ball::init(SDL_Renderer* renderer)
 {
 	IMG_Init(IMG_INIT_PNG);
 
+	//  Используем изображение в качестве текстуры шара
+
 	SDL_Surface* image = IMG_Load("ball.png");
 
 	mImage = SDL_CreateTextureFromSurface(renderer, image);
@@ -57,6 +59,8 @@ void Ball::update(const Wall& topWall, const Wall& bottomWall, const Paddle& lef
 
 	if (mAabb.collides(bottomWallAabb))
 	{
+		// Проверка столкновения с нижней стенкой
+
 		mPosition.y = bottomWallAabb.getCenterY();
 		mPosition.y -= bottomWallAabb.getExtentY();
 		mPosition.y -= mPosition.h;
@@ -68,6 +72,8 @@ void Ball::update(const Wall& topWall, const Wall& bottomWall, const Paddle& lef
 	}
 	else if (mAabb.collides(topWallAabb))
 	{
+		// Проверка столкновения с верхней стенкой
+
 		mPosition.y = topWallAabb.getCenterY();
 		mPosition.y += topWallAabb.getExtentY();
 
@@ -78,6 +84,8 @@ void Ball::update(const Wall& topWall, const Wall& bottomWall, const Paddle& lef
 	}
 	else if (mAabb.collides(leftPaddleAabb))
 	{
+		// Проверка столкновения с левой ракеткой
+
 		mPosition.x = leftPaddleAabb.getCenterX();
 		mPosition.x += leftPaddleAabb.getExtentX();
 
@@ -86,9 +94,13 @@ void Ball::update(const Wall& topWall, const Wall& bottomWall, const Paddle& lef
 
 		mDirection[0] = -mDirection[0];
 
+		// Увеличиваем скорость мяча
+		mVelocity += 1.0f;
 	}
 	else if (mAabb.collides(rightPaddleAabb))
 	{
+		// Проверка столкновения с правой ракеткой
+
 		mPosition.x = rightPaddleAabb.getCenterX();
 		mPosition.x -= rightPaddleAabb.getExtentX();
 		mPosition.x -= mPosition.w;
@@ -97,14 +109,22 @@ void Ball::update(const Wall& topWall, const Wall& bottomWall, const Paddle& lef
 		mAabb.setCenterY(mPosition.y + mAabb.getExtentY());
 
 		mDirection[0] = -mDirection[0];
+
+		mVelocity += 1.0f;
 	}
 	else if (mAabb.collides(leftWallAabb))
 	{
+		// Проверка столкновения с левой стенкой
+		// Начисляем компьютеру очко если было столкновение
+
 		mWallCollided = true;
 		mScores = Scores::COMPUTER;
 	}
 	else if (mAabb.collides(rightWallAabb))
 	{
+		// Проверка столкновения с правой стенкой
+		// Начисляем игроку очко если было столкновение
+
 		mWallCollided = true;
 		mScores = Scores::PLAYER;
 	}
@@ -113,6 +133,5 @@ void Ball::update(const Wall& topWall, const Wall& bottomWall, const Paddle& lef
 
 void Ball::draw(SDL_Renderer* renderer)
 {
-
 	SDL_RenderCopy(renderer, mImage, nullptr, &mPosition);
 }

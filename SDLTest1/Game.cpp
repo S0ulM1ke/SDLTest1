@@ -5,13 +5,16 @@
 Game::Game()
 	: mResolution({ 680,480 }), mBox({ 600, 400 }), mAi(mRightPaddle)
 {
+	// Rsolution - именяемый размер экрана
+	// Box - игровое поле, подстраивается под разрешение не изменяя соотношение
+
 	SDL_CreateWindowAndRenderer(mResolution[0], mResolution[1], SDL_WINDOW_RESIZABLE, &mGameWindow, &mGameWindowRenderer);
 	SDL_RenderSetLogicalSize(mGameWindowRenderer, mBox[0], mBox[1]);
 
 	mHafBox = { mBox[0] / 2, mBox[1] / 2 };
 	mLine = {mHafBox[0] - 10/2, 5, 10, mBox[1]};
 	mLeftPaddle = { 0, mHafBox[1] - 50 , Paddle::Type::PLAYER};
-	mRightPaddle = { mBox[0] - 50, mHafBox[1] - 50 , Paddle::Type::COMPUTER};
+	mRightPaddle = { mBox[0] - 25, mHafBox[1] - 50 , Paddle::Type::COMPUTER};
 	mTopWall = { 0, 0, mBox[0], 0 };
 	mBottomWall = { 0, mBox[1], mBox[0], 0 };
 	mLeftWall = { 0, 0, 0 , mBox[1] };
@@ -20,6 +23,7 @@ Game::Game()
 	mPlayerScore = { mHafBox[0] / 2 , 0};
 	mComputerScore = {static_cast<int>(mHafBox[0] * 1.5), 0};
 
+	// Инициализация текстур шара и текущих очков
 	mBall.init(mGameWindowRenderer);
 	mPlayerScore.init(mGameWindowRenderer);
 	mComputerScore.init(mGameWindowRenderer);
@@ -27,6 +31,8 @@ Game::Game()
 
 void Game::gameLoop()
 {
+	// Цикл игры
+
 	bool keep_running = true;
 	while (keep_running)
 	{
@@ -53,6 +59,8 @@ void Game::gameLoop()
 
 void Game::update(int delayTime)
 {
+	// Вызывает методы для перемещения элементов по экрану и их взамиодействия
+
 	mLeftPaddle.update(mTopWall, mBottomWall);
 	mRightPaddle.update(mTopWall, mBottomWall);
 	mBall.update(mTopWall, mBottomWall, mLeftPaddle, mRightPaddle, mLeftWall, mRightWall);
@@ -60,6 +68,8 @@ void Game::update(int delayTime)
 	mRightPaddle.setDirection(mAi.getAiDir());
 	if (mBall.isCollided())
 	{
+		// В случае столкновения мяча со стенкой начисляем соответсвующему игроку очко и перерисовываем это значение
+
 		if (mBall.isScores(Ball::Scores::PLAYER))
 		{
 			mPlayerScore.increaseScore();
@@ -71,6 +81,8 @@ void Game::update(int delayTime)
 			mComputerScore.init(mGameWindowRenderer);
 		}
 
+		// Делаем сброс уровня
+
 		stateReset();
 	}
 
@@ -79,6 +91,8 @@ void Game::update(int delayTime)
 
 void Game::draw()
 {
+	// Отрисовка
+
 	SDL_RenderClear(mGameWindowRenderer);
 
 	mLine.draw(mGameWindowRenderer);
@@ -93,6 +107,8 @@ void Game::draw()
 
 void Game::onKeyDown(SDL_KeyboardEvent& event)
 {
+	// Премещение ракетки на нажаую клавишу
+
 	switch (event.keysym.sym)
 	{
 	case SDLK_w:
@@ -106,6 +122,8 @@ void Game::onKeyDown(SDL_KeyboardEvent& event)
 
 void Game::onKeyUp(SDL_KeyboardEvent& event)
 {
+	// Если клавиша отпущена - остановить ракетку
+
 	switch (event.keysym.sym)
 	{
 	case SDLK_w:
@@ -125,6 +143,8 @@ void Game::onKeyUp(SDL_KeyboardEvent& event)
 
 void Game::stateReset()
 {
+	// Сброс уровня
+
 	const auto& ballAabb = mBall.getAabb();
 	mBall.setPosX(mHafBox[0] - ballAabb.getExtentX());
 	mBall.setPosY(mHafBox[1] - ballAabb.getExtentY());
@@ -137,6 +157,8 @@ void Game::stateReset()
 	case 2: mBall.setDirection({ -0.5f,  0.5f }); break;
 	case 3: mBall.setDirection({ -0.5f, -0.5f }); break;
 	}
+
+	mBall.setVelocity(mBall.VELOCITY);
 
 	const auto& paddleAabb = mLeftPaddle.getAabb();
 	mLeftPaddle.setPosY(mHafBox[1] - paddleAabb.getExtentY());

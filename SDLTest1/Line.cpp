@@ -6,6 +6,7 @@ Line::Line(int x, int y, int width, int height) : mPosition({ x, y, width, heigh
 
 void Line::draw(SDL_Renderer* renderer)
 {
+	// Отрисовка вертикальной линии-сетки
 
 	for (float y = static_cast<float>(mPosition.y); y < mPosition.h; y+= (1.93 * mPosition.w))
 	{
