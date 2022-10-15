@@ -14,7 +14,7 @@ class Game
 {
 public:
 	Game();
-	~Game() = default;
+	~Game();
 
 	void gameLoop();
 	void update(int delayTime);
@@ -32,7 +32,6 @@ public:
 
 private:
 	SDL_Window* mGameWindow;
-	SDL_Event mGameWindowEvent;
 	SDL_Renderer* mGameWindowRenderer;
 
 	Wall mTopWall;

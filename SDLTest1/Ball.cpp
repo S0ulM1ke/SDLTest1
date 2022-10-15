@@ -4,9 +4,8 @@ const float Ball::VELOCITY = 4.0f;
 
 Ball::Ball(int x, int y) : 	mVelocity(VELOCITY), mDirection({ -0.5f, 0.5f })
 {
+	mPosition = { x, y };
 	mVelocity = VELOCITY;
-	mPosition.x = x;
-	mPosition.y = y;
 
 	mScores = Scores::DEFAULT;
 }

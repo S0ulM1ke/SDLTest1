@@ -29,6 +29,13 @@ Game::Game()
 	mComputerScore.init(mGameWindowRenderer);
 }
 
+Game::~Game()
+{
+	SDL_DestroyWindow(mGameWindow);
+	SDL_DestroyRenderer(mGameWindowRenderer);
+	SDL_Quit();
+}
+
 void Game::gameLoop()
 {
 	// ÷икл игры
@@ -36,23 +43,24 @@ void Game::gameLoop()
 	bool keep_running = true;
 	while (keep_running)
 	{
-		while (SDL_PollEvent(&mGameWindowEvent) > 0)
+		SDL_Event e;
+		while (SDL_PollEvent(&e) > 0)
 		{
-			switch (mGameWindowEvent.type)
+			switch (e.type)
 			{
 			case SDL_QUIT:
 				keep_running = false;
 				break;
 			case SDL_KEYDOWN:
-				onKeyDown(mGameWindowEvent.key);
+				onKeyDown(e.key);
 				break;
 			case SDL_KEYUP:
-				onKeyUp(mGameWindowEvent.key);
+				onKeyUp(e.key);
 				break;
 			}
 		}
 
-		update(8);
+		update(8); // ”правление общей скоростью игры
 		draw();
 	}
 }

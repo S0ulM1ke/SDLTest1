@@ -4,8 +4,9 @@
 
 Score::Score(int x, int y)
 {
-	mPosition.x = x;
-	mPosition.y = y;
+	mPosition = { x , y };
+	//mPosition.x = x;
+	//mPosition.y = y;
 }
 
 Score::~Score()
