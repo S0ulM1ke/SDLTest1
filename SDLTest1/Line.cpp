@@ -8,7 +8,7 @@ void Line::draw(SDL_Renderer* renderer)
 {
 	// Отрисовка вертикальной линии-сетки
 
-	for (float y = static_cast<float>(mPosition.y); y < mPosition.h; y+= (1.93 * mPosition.w))
+	for (float y = static_cast<float>(mPosition.y); y < mPosition.h; y+= (1.93f * mPosition.w))
 	{
 		SDL_Rect rect{ mPosition.x, static_cast<int>(y), mPosition.w, mPosition.w };
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
