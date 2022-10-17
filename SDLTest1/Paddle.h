@@ -36,8 +36,10 @@ private:
 	static const int kHeight;
 	static const int kPlayerVelocity;
 	static const int kCompVelocity;
+
 	int mColor = 0;
 	int mVelocity = 0;
+
 	Type mType;
 	Direction mDirection;
 	SDL_Rect mPosition = { 0 };

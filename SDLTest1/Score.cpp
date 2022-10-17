@@ -37,7 +37,6 @@ void Score::init(SDL_Renderer* renderer)
 
 	TTF_Quit();
 
-
 	SDL_QueryTexture(mText, nullptr, nullptr, &mPosition.w, &mPosition.h);
 
 }

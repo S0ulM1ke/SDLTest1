@@ -8,7 +8,6 @@ class Wall
 {
 public:
 	Wall(int x, int y, int width, int height);
-
 	Wall() = default;
 
 	void draw(SDL_Renderer* rerenderer);

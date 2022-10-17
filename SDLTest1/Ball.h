@@ -20,6 +20,7 @@ public:
 	Ball() = default;
 	Ball(int x, int y, float dirX, float dirY);
 	~Ball();
+
 	void init(SDL_Renderer* renderer);
 	void update(const Wall& topWall, const Wall& bottomWall, const Paddle& leftPaddle, const Paddle& rightPaddle, const Wall& lefttWall, const Wall& rightWall);
 	void draw(SDL_Renderer* renderer);

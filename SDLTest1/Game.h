@@ -39,7 +39,6 @@ private:
 	static const int kPaddleIndent;
 	static const int kBallIndent;
 	
-
 	SDL_Window* mGameWindow;
 	SDL_Renderer* mGameWindowRenderer;
 

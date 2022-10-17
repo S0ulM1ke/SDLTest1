@@ -9,9 +9,12 @@ public:
 	Score() = default;
 	Score(int x, int y, int color);
 	~Score();
+
 	void increaseScore();
+
 	void init(SDL_Renderer* renderer);
 	void draw(SDL_Renderer* renderer);
+
 	void setPosX(int x) { mPosition.x = x; }
 	void setPosY(int y) { mPosition.y = y; }
 

@@ -182,4 +182,3 @@ void Game::stateReset()
 	mRightPaddle.setPosY(mHafBox[1] - paddleAabb.getExtentY());
 
 }
-

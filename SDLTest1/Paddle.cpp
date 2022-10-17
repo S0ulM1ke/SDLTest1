@@ -21,7 +21,6 @@ Paddle::Paddle(int x, int y, Type type, int color) : mColor(color)
 	mAabb.setCenterY(y + halfHeight);
 	mAabb.setExtentX(halfWidth);
 	mAabb.setExtentY(halfHeight);
-
 }
 
 
@@ -38,7 +37,6 @@ void Paddle::update(const Wall& topWall, const Wall& bottomWall)
 		mVelocity = kCompVelocity;
 		break;
 	}
-
 
 	if (mDirection != Direction::NONE)
 	{
@@ -77,7 +75,6 @@ void Paddle::update(const Wall& topWall, const Wall& bottomWall)
 			}
 		}
 	}
-
 }
 
 void Paddle::draw(SDL_Renderer* renderer)
