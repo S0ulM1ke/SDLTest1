@@ -1,12 +1,16 @@
 #include "Paddle.h"
 
+const int Paddle::kWidth = 25;
+const int Paddle::kHeight = 75;
+const int Paddle::kPlayerVelocity = 3;
+const int Paddle::kCompVelocity = 2;
 
-Paddle::Paddle(int x, int y, Type type)
+Paddle::Paddle(int x, int y, Type type, int color) : mColor(color)
 {
 	mPosition.x = x;
 	mPosition.y = y;
-	mPosition.w = 25;
-	mPosition.h = 75;
+	mPosition.w = kWidth;
+	mPosition.h = kHeight;
 	mType = type;
 	mDirection = Direction::NONE;
 
@@ -28,10 +32,10 @@ void Paddle::update(const Wall& topWall, const Wall& bottomWall)
 	switch (mType)
 	{
 	case Paddle::Type::PLAYER:
-		mVelocity = 3;
+		mVelocity = kPlayerVelocity;
 		break;
 	case Paddle::Type::COMPUTER:
-		mVelocity = 2;
+		mVelocity = kCompVelocity;
 		break;
 	}
 
@@ -78,9 +82,9 @@ void Paddle::update(const Wall& topWall, const Wall& bottomWall)
 
 void Paddle::draw(SDL_Renderer* renderer)
 {
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+	SDL_SetRenderDrawColor(renderer, mColor, mColor, mColor, mColor);
 	SDL_RenderFillRect(renderer, &mPosition);
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, mColor);
 }
 
 

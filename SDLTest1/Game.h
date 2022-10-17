@@ -31,6 +31,15 @@ public:
 
 
 private:
+	static const std::array<int, 2> kResolution;
+	static const std::array<int, 2> kBox;
+	static const std::array<float, 2> kBallDir;
+	static const int kWhite;
+	static const int kLineSize;
+	static const int kPaddleIndent;
+	static const int kBallIndent;
+	
+
 	SDL_Window* mGameWindow;
 	SDL_Renderer* mGameWindowRenderer;
 

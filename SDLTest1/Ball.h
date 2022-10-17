@@ -3,7 +3,6 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <array>
-#include <random>
 
 #include "AABB.h"
 #include "Wall.h"
@@ -13,13 +12,13 @@
 class Ball
 {
 public:
-	static const float VELOCITY;
+	static const float kVelocity;
 
 	enum class Scores : int
 	{DEFAULT = 0, PLAYER = 1, COMPUTER = 2};
 
 	Ball() = default;
-	Ball(int x, int y);
+	Ball(int x, int y, float dirX, float dirY);
 	~Ball();
 	void init(SDL_Renderer* renderer);
 	void update(const Wall& topWall, const Wall& bottomWall, const Paddle& leftPaddle, const Paddle& rightPaddle, const Wall& lefttWall, const Wall& rightWall);
@@ -39,11 +38,11 @@ public:
 	AABB& getAabb() { return mAabb; }
 private:
 	bool mWallCollided = false;
-	Scores mScores;
+	Scores mScores = Scores::DEFAULT;
 	SDL_Texture* mImage = nullptr;
-	SDL_Rect mPosition;
+	SDL_Rect mPosition = { 0 };
 	AABB mAabb;
-	float mVelocity;
-	std::array<float, 2>  mDirection;
+	float mVelocity = 0.0f;
+	std::array<float, 2>  mDirection = { 0,0 };
 };
 

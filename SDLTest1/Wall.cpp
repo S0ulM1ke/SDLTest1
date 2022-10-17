@@ -1,6 +1,6 @@
 #include "Wall.h"
 
-Wall::Wall(int x, int y, int width, int height) :mRect({ x, y, width, height})
+Wall::Wall(int x, int y, int width, int height) :mPosition({ x, y, width, height})
 {
 	mAabb.setCenterX(x + width / 2);
 	mAabb.setCenterY(y + height / 2);
@@ -10,5 +10,5 @@ Wall::Wall(int x, int y, int width, int height) :mRect({ x, y, width, height})
 
 void Wall::draw(SDL_Renderer* rerenderer)
 {
-	SDL_RenderFillRect(rerenderer, &mRect);
+	SDL_RenderFillRect(rerenderer, &mPosition);
 }

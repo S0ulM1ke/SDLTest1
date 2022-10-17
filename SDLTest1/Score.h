@@ -7,7 +7,7 @@ class Score
 {
 public:
 	Score() = default;
-	Score(int x, int y);
+	Score(int x, int y, int color);
 	~Score();
 	void increaseScore();
 	void init(SDL_Renderer* renderer);
@@ -17,7 +17,8 @@ public:
 
 private:
 	int mValue = 0;
-	SDL_Rect mPosition;
+	int mColor;
+	SDL_Rect mPosition = { 0 };
 	SDL_Texture* mText = nullptr;
 	_TTF_Font* mFont = nullptr;
 

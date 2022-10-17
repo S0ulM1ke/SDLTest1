@@ -1,13 +1,9 @@
 #include "Ball.h"
 
-const float Ball::VELOCITY = 4.0f;
+const float Ball::kVelocity = 4.0f;
 
-Ball::Ball(int x, int y) : 	mVelocity(VELOCITY), mDirection({ -0.5f, 0.5f })
+Ball::Ball(int x, int y, float dirX, float dirY) : 	mVelocity(kVelocity), mDirection({ dirX, dirY }), mPosition({x,y})
 {
-	mPosition = { x, y };
-	mVelocity = VELOCITY;
-
-	mScores = Scores::DEFAULT;
 }
 
 Ball::~Ball()

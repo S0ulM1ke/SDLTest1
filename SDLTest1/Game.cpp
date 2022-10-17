@@ -2,8 +2,17 @@
 
 #include <SDL_timer.h>
 
+const std::array<int, 2> Game::kResolution = { 680, 480 };
+const std::array<int, 2> Game::kBox = { 600, 400 };
+const std::array<float, 2> Game::kBallDir = { 0.5f, -0.5f};
+const int Game::kWhite = 255;
+const int Game::kLineSize = 10;
+const int Game::kPaddleIndent = 50;
+const int Game::kBallIndent = 12;
+
+
 Game::Game()
-	: mResolution({ 680,480 }), mBox({ 600, 400 }), mAi(mRightPaddle)
+	: mResolution({ kResolution[0], kResolution[1] }), mBox({ kBox[0], kBox[1] }), mAi(mRightPaddle)
 {
 	// Rsolution - именяемый размер экрана
 	// Box - игровое поле, подстраивается под разрешение не изменяя соотношение
@@ -12,16 +21,16 @@ Game::Game()
 	SDL_RenderSetLogicalSize(mGameWindowRenderer, mBox[0], mBox[1]);
 
 	mHafBox = { mBox[0] / 2, mBox[1] / 2 };
-	mLine = {mHafBox[0] - 10/2, 5, 10, mBox[1]};
-	mLeftPaddle = { 0, mHafBox[1] - 50 , Paddle::Type::PLAYER};
-	mRightPaddle = { mBox[0] - 25, mHafBox[1] - 50 , Paddle::Type::COMPUTER};
+	mLine = {mHafBox[0] - kLineSize/2, kLineSize/2, kLineSize, mBox[1], kWhite};
+	mLeftPaddle = { 0, mHafBox[1] - kPaddleIndent , Paddle::Type::PLAYER, kWhite};
+	mRightPaddle = { mBox[0] - kPaddleIndent / 2, mHafBox[1] - kPaddleIndent , Paddle::Type::COMPUTER, kWhite};
 	mTopWall = { 0, 0, mBox[0], 0 };
 	mBottomWall = { 0, mBox[1], mBox[0], 0 };
 	mLeftWall = { 0, 0, 0 , mBox[1] };
 	mRightWall = { mBox[0], 0 , 0, mBox[1] };
-	mBall = { mHafBox[0] - 12, mHafBox[1] - 12 };
-	mPlayerScore = { mHafBox[0] / 2 , 0};
-	mComputerScore = {static_cast<int>(mHafBox[0] * 1.5), 0};
+	mBall = { mHafBox[0] - kBallIndent, mHafBox[1] - kBallIndent , kBallDir[1], kBallDir[0]};
+	mPlayerScore = { mHafBox[0] / 2 , 0, kWhite};
+	mComputerScore = {static_cast<int>(mHafBox[0] * 1.5), 0, kWhite};
 
 	// Инициализация текстур шара и текущих очков
 	mBall.init(mGameWindowRenderer);
@@ -160,13 +169,13 @@ void Game::stateReset()
 	mBall.collisionReset();
 	int random = rand() % 4;
 	switch (random) {
-	case 0: mBall.setDirection({ 0.5f,  0.5f }); break;
-	case 1: mBall.setDirection({ 0.5f, -0.5f }); break;
-	case 2: mBall.setDirection({ -0.5f,  0.5f }); break;
-	case 3: mBall.setDirection({ -0.5f, -0.5f }); break;
+	case 0: mBall.setDirection({ kBallDir[0],  kBallDir[0] }); break;
+	case 1: mBall.setDirection({ kBallDir[0], kBallDir[1] }); break;
+	case 2: mBall.setDirection({ kBallDir[1],  kBallDir[0] }); break;
+	case 3: mBall.setDirection({ kBallDir[1], kBallDir[1] }); break;
 	}
 
-	mBall.setVelocity(mBall.VELOCITY);
+	mBall.setVelocity(mBall.kVelocity);
 
 	const auto& paddleAabb = mLeftPaddle.getAabb();
 	mLeftPaddle.setPosY(mHafBox[1] - paddleAabb.getExtentY());

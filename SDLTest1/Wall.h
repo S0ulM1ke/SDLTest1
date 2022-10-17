@@ -17,7 +17,7 @@ public:
 	AABB& getAabb() { return mAabb; }
 
 private:
-	SDL_Rect mRect;
+	SDL_Rect mPosition = { 0 };
 	AABB mAabb;
 };
 

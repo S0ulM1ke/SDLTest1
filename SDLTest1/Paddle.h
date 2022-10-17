@@ -15,7 +15,7 @@ public:
 	enum class Direction : int
 	{ NONE = 0, UP = -1, DOWN  = 1};
 
-	Paddle(int x, int y, Type type);
+	Paddle(int x, int y, Type type, int color);
 	Paddle() = default;
 	~Paddle() = default;
 
@@ -32,10 +32,15 @@ public:
 	AABB& getAabb() { return mAabb; }
 private:
 
+	static const int kWidth;
+	static const int kHeight;
+	static const int kPlayerVelocity;
+	static const int kCompVelocity;
+	int mColor = 0;
 	int mVelocity = 0;
 	Type mType;
 	Direction mDirection;
-	SDL_Rect mPosition;
+	SDL_Rect mPosition = { 0 };
 	AABB mAabb;
 };
 

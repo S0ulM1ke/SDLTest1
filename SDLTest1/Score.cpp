@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 
-Score::Score(int x, int y)
+Score::Score(int x, int y, int color) : mColor(color)
 {
 	mPosition = { x , y };
 }
@@ -28,7 +28,7 @@ void Score::init(SDL_Renderer* renderer)
 
 	std::string displayedValue = std::to_string(mValue);
 
-	SDL_Color color = { 255, 255, 255 };
+	SDL_Color color = { static_cast<Uint8>(mColor), static_cast<Uint8>(mColor), static_cast<Uint8>(mColor) };
 	SDL_Surface* scoreValue = TTF_RenderText_Solid(mFont, displayedValue.c_str(), color);
 
 	mText = SDL_CreateTextureFromSurface(renderer, scoreValue);
